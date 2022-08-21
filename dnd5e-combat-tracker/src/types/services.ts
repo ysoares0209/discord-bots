@@ -3,3 +3,8 @@ export interface CreateTrackerProps {
   channelId: string;
   userId: string;
 }
+
+export interface DisableExistingTrackerProps {
+  guildId: string;
+  channelId: string;
+}

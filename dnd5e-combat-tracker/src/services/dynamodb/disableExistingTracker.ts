@@ -3,8 +3,12 @@ import {
   DeleteItemCommand,
   PutItemCommand,
 } from "@aws-sdk/client-dynamodb";
+import { DisableExistingTrackerProps } from "../../types/services";
 
-const disableExistingTracker = async ({ guildId, channelId }: any) => {
+const disableExistingTracker = async ({
+  guildId,
+  channelId,
+}: DisableExistingTrackerProps) => {
   const client = new DynamoDBClient({
     region: process.env.AWS_REGION || "",
     credentials: {
