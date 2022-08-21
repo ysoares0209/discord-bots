@@ -12,4 +12,10 @@ export const TEST: Command = {
   type: chartInputCommandType,
 };
 
-export const ALL_COMMANDS: Array<Command> = [TEST];
+export const START_TRACKER: Command = {
+  name: "start-tracker",
+  description: "Starts a new combat tracker",
+  type: chartInputCommandType,
+};
+
+export const ALL_COMMANDS: Array<Command> = [TEST, START_TRACKER];
