@@ -1,29 +1,26 @@
 import { InteractionResponseType } from "discord-interactions";
 
-const startTracker = (customModalId: string) => {
-  const actionRowType = 1;
-  const textInputType = 4;
-  const singleParagraphTextInputType = 1;
+//types
+import { StartTrackerProps } from "../types/commands";
+
+//services
+import createTracker from "../services/dynamodb/createTracker";
+import disableExistingTracker from "../services/dynamodb/disableExistingTracker";
+
+const startTracker = async ({
+  guildId,
+  channelId,
+  userId,
+}: StartTrackerProps) => {
+  await disableExistingTracker({ guildId, channelId });
+  const createdTracker = await createTracker({ channelId, guildId, userId });
+  const responseContent = createdTracker.error
+    ? `you rolled a 1! Something bad happened... (Error: tracker not created! - ${createdTracker.error}); email yansoaressilva@outlook.com to get support!`
+    : `New tracker created!`;
   return {
-    type: InteractionResponseType.APPLICATION_MODAL,
+    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
     data: {
-      title: "Create new tracker",
-      custom_id: customModalId,
-      components: [
-        {
-          type: actionRowType,
-          components: [
-            {
-              type: textInputType,
-              custom_id: "tracker-name",
-              label: "Your encounter name",
-              style: singleParagraphTextInputType,
-              required: true,
-              placeholder: "You can use the name to find this tracker later!",
-            },
-          ],
-        },
-      ],
+      content: responseContent,
     },
   };
 };

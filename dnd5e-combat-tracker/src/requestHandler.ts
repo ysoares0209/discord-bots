@@ -1,18 +1,15 @@
 import { Request, Response } from "express";
 import { InteractionType, InteractionResponseType } from "discord-interactions";
 
+//types
+import { Member } from "./types/discord";
+
 //commands
 import helloWorldCommand from "./commands/helloWorld";
 import startTrackerCommand from "./commands/startTracker";
 
-//handler
-import startTrackerSubmition from "./handlers/startTrackerSubmition";
-
-//custom ids
-const newTracker = "new-tracker";
-
 const requestHandler = async (req: Request, res: Response) => {
-  const { type, data } = req.body;
+  const { type, data, channel_id, guild_id, member } = req.body;
 
   //request validation
   if (type === InteractionType.PING) {
@@ -22,27 +19,20 @@ const requestHandler = async (req: Request, res: Response) => {
   //commands handler
   if (type === InteractionType.APPLICATION_COMMAND) {
     const { name: commandName } = data as { name: string };
-    const result = (() => {
+    const userId = (member as Member).user.id;
+
+    const result = await (async () => {
       if (commandName === "test") return helloWorldCommand();
       if (commandName === "start-tracker") {
-        return startTrackerCommand(newTracker);
+        const response = await startTrackerCommand({
+          channelId: channel_id,
+          guildId: guild_id,
+          userId,
+        });
+        return response;
       }
     })();
     res.send(result);
-  }
-
-  if (type === InteractionType.APPLICATION_MODAL_SUBMIT) {
-    const { custom_id, components } = data;
-    if (custom_id === newTracker) {
-      const { member, guild_id, channel_id } = req.body;
-      const result = await startTrackerSubmition({
-        components,
-        member,
-        channelId: channel_id,
-        guildId: guild_id,
-      });
-      res.send(result);
-    }
   }
 };
 

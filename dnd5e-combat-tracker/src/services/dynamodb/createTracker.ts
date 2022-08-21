@@ -2,7 +2,6 @@ import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb";
 import { CreateTrackerProps } from "../../types/services";
 
 const createTracker = async ({
-  trackerName,
   channelId,
   guildId,
   userId,
@@ -16,14 +15,13 @@ const createTracker = async ({
       },
     });
     const itemToSave = {
-      pk: { S: `guildId#${guildId}#channelId#${channelId}` },
+      pk: { S: `guildId#${guildId}` },
       sk: {
-        S: `trackerName#${trackerName}#date_created#${new Date().toISOString()}`,
+        S: `channelId#${channelId}#active#true`,
       },
       turn: { N: "1" },
       currentEntity: { S: "" },
       entities: { L: [] },
-      active: { BOOL: true },
       createdBy: { S: userId },
     };
     const command = new PutItemCommand({

@@ -14,7 +14,8 @@ export const TEST: Command = {
 
 export const START_TRACKER: Command = {
   name: "start-tracker",
-  description: "Starts a new combat tracker",
+  description:
+    "Starts a new combat tracker. Previous tracker is going to be lost!",
   type: chartInputCommandType,
 };
 
