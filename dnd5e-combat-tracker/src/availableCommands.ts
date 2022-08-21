@@ -1,7 +1,7 @@
 export interface Command {
   name: string;
   description: string;
-  type: number;
+  type: 1 | 2 | 3;
 }
 
 const chartInputCommandType = 1;
