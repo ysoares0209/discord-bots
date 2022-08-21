@@ -12,18 +12,15 @@ const requestHandler = async (req: Request, res: Response) => {
   if (type === InteractionType.PING) {
     return res.send({ type: InteractionResponseType.PONG });
   }
+
+  //commands handler
   if (type === InteractionType.APPLICATION_COMMAND) {
     const { name: commandName } = data as { name: string };
-
-    if (commandName === "test") {
-      const result = helloWorldCommand();
-      res.send(result);
-    }
-
-    if (commandName === "start-tracker") {
-      const result = startTrackerCommand();
-      res.send(result);
-    }
+    const result = (() => {
+      if (commandName === "test") return helloWorldCommand();
+      if (commandName === "start-tracker") return startTrackerCommand();
+    })();
+    res.send(result);
   }
 };
 
