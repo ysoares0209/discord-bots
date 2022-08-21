@@ -5,7 +5,7 @@ const startTracker = () => {
   const textInputType = 4;
   const singleParagraphTextInputType = 1;
   return {
-    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+    type: InteractionResponseType.APPLICATION_MODAL,
     data: {
       title: "Create new tracker",
       custom_id: "new-tracker",
