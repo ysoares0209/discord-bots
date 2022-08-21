@@ -3,6 +3,7 @@ import { InteractionType, InteractionResponseType } from "discord-interactions";
 
 //commands
 import helloWorldCommand from "./commands/helloWorld";
+import startTrackerCommand from "./commands/startTracker";
 
 const requestHandler = async (req: Request, res: Response) => {
   const { type, data } = req.body;
@@ -12,10 +13,15 @@ const requestHandler = async (req: Request, res: Response) => {
     return res.send({ type: InteractionResponseType.PONG });
   }
   if (type === InteractionType.APPLICATION_COMMAND) {
-    const { name } = data as { name: string };
+    const { name: commandName } = data as { name: string };
 
-    if (name === "test") {
+    if (commandName === "test") {
       const result = helloWorldCommand();
+      res.send(result);
+    }
+
+    if (commandName === "start-tracker") {
+      const result = startTrackerCommand();
       res.send(result);
     }
   }
