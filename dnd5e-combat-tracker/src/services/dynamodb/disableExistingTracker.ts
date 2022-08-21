@@ -30,7 +30,6 @@ const disableExistingTracker = async ({
       ReturnValues: "ALL_OLD",
     });
     const { Attributes } = await client.send(deleteCommand);
-    console.log(Attributes);
     if (Attributes) {
       const completedItemToInsert = {
         ...Attributes,
