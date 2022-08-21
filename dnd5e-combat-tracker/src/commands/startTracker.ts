@@ -1,6 +1,6 @@
 import { InteractionResponseType } from "discord-interactions";
 
-const startTracker = () => {
+const startTracker = (customModalId: string) => {
   const actionRowType = 1;
   const textInputType = 4;
   const singleParagraphTextInputType = 1;
@@ -8,7 +8,7 @@ const startTracker = () => {
     type: InteractionResponseType.APPLICATION_MODAL,
     data: {
       title: "Create new tracker",
-      custom_id: "new-tracker",
+      custom_id: customModalId,
       components: [
         {
           type: actionRowType,
