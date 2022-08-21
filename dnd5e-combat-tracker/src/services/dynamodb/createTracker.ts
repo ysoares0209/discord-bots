@@ -31,7 +31,7 @@ const createTracker = async ({
     await client.send(command);
     return { ok: true, item: itemToSave };
   } catch (error) {
-    console.log("error saving tracking ", error);
+    console.log("error saving tracker ", error);
     return { error: (error as Error).message };
   }
 };
