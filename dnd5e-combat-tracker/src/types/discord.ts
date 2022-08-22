@@ -14,3 +14,9 @@ export type Member = {
     username: string;
   };
 };
+
+export type Option = {
+  name: string;
+  type: number;
+  value: string;
+};

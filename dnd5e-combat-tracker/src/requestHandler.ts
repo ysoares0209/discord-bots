@@ -7,6 +7,7 @@ import { Member } from "./types/discord";
 //commands
 import helloWorldCommand from "./commands/helloWorld";
 import startTrackerCommand from "./commands/startTracker";
+import addCharacterCommand from "./commands/addCharacter";
 
 const requestHandler = async (req: Request, res: Response) => {
   const { type, data, channel_id, guild_id, member } = req.body;
@@ -28,6 +29,14 @@ const requestHandler = async (req: Request, res: Response) => {
           channelId: channel_id,
           guildId: guild_id,
           userId,
+        });
+        return response;
+      }
+      if (commandName === "add-character") {
+        const response = await addCharacterCommand({
+          guildId: guild_id,
+          channelId: channel_id,
+          options: data.options,
         });
         return response;
       }
